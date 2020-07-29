@@ -4,11 +4,13 @@
 \alias{clean_workspace}
 \title{Function to clean workspace appart from some variables}
 \usage{
-clean_workspace(keep = NULL, envir = .GlobalEnv)
+clean_workspace(keep = NULL, load_on_exit = NULL, envir = .GlobalEnv)
 }
 \arguments{
 \item{keep}{Objects to not be removed from the workspace. Provide as 
 character vector}
+
+\item{load_on_exit}{character; Source a file on exit. Default: NULL - none.}
 
 \item{envir}{Envrionment to be cleaned. Deafault: .GlobalEnv}
 }
