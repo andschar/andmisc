@@ -1,0 +1,14 @@
+Package: andmisc
+Version: 0.0.0.9001
+Date: 2020-07-28
+Title: Missceleaneous functions written by Andreas Scharmüller
+Authors@R: c(person("Andreas", "Scharmüller", role = c("aut", "cre"),
+    email = "andschar@protonmail.com"))
+Maintainer: Andreas Scharmüller <andschar@protonmail.com>
+Depends:
+    R (>= 3.5.0)
+License: MIT + file LICENSE
+URL: https://github.com/andschar/standartox
+BugReports: https://github.com/andschar/standartox/issues
+RoxygenNote: 7.1.1
+Encoding: UTF-8
