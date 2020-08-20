@@ -76,6 +76,82 @@ read_query = function(query = NULL,
   dat
 }
 
+#' Function to read spatial data from a database
+#'
+#' @param query A query string.
+#' @param cred_file An .R file containing the necessary credentials to connect
+#' to a Postgres database. Can contain variables: user, host, port, password,
+#' dbname.
+#' @param host Optional host. Overwritten if \code{host} is defined in
+#' cred_file.
+#' @param port Optional port Overwritten if \code{port} is defined in
+#' cred_file.
+#' @param dbname Optional dbname Overwritten if \code{dbname} is defined
+#' in cred_file.
+#' @param user Optional user. Overwritten if \code{user} is defined in
+#' cred_file.
+#' @param password Optional password Overwritten if \code{password} is defined
+#' in cred_file.
+#' 
+#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' 
+#' @export
+#' 
+#' @examples
+#' \donttest{
+#' # connection to database required
+#' read_spatial(query = "SELECT * FROM schema.table LIMIT 1;",
+#'              cred_file = cred.R)
+#' }
+#' 
+read_sf = function(query = NULL,
+                   cred_file = NULL,
+                   host = NULL,
+                   port = NULL,
+                   dbname = NULL,
+                   user = NULL,
+                   password = NULL) {
+  # credentials file
+  if (!is.null(cred_file)) {
+    message('Sourcing cred_file: ', cred_file)
+    source(cred_file, local = TRUE)
+  }
+  # checking
+  if (is.null(query)) {
+    stop('No query supplied.')
+  }
+  if (is.null(host)) {
+    stop('Provide a host.')
+  }
+  if (is.null(port)) {
+    stop('Provide a port.')
+  }
+  if (is.null(dbname)) {
+    stop('Provide a dbname.')
+  }
+  if (is.null(password)) {
+    stop('Provide a password.')
+  }
+  if (is.null(user)) {
+    stop('Provide a user.')
+  }
+  # connection
+  con = DBI::dbConnect(
+    RPostgreSQL::PostgreSQL(),
+    host = host,
+    port = port,
+    dbname = dbname,
+    user = user,
+    password = password
+  )
+  # bigint = 'integer') # to not return integer64 https://stackoverflow.com/questions/45171762/set-dbgetquery-to-return-integer64-as-integer
+  on.exit(DBI::dbDisconnect(con))
+  # query
+  message('Database: ', DBI::dbGetQuery(con, "SELECT current_database();"))
+  sf::st_read(con, query = query)
+}
+
+
 #' Function to send to a database
 #'
 #' @param query A query string.

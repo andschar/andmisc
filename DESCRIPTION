@@ -1,5 +1,5 @@
 Package: andmisc
-Version: 0.0.0.9005
+Version: 0.0.0.9006
 Date: 2020-08-20
 Title: Missceleaneous functions written by Andreas Scharmüller
 Authors@R: c(person("Andreas", "Scharmüller", role = c("aut", "cre"),
