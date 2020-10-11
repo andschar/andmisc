@@ -70,10 +70,11 @@ read_query = function(query = NULL,
   on.exit(DBI::dbDisconnect(con))
   # query
   message('Database: ', DBI::dbGetQuery(con, "SELECT current_database();"))
+  time = Sys.time()
   dat = DBI::dbGetQuery(con, query)
-  data.table::setDT(dat)
+  message('Query took: ', format(Sys.time() - time, digits = 1))
   
-  dat
+  data.table::as.data.table(dat)
 }
 
 #' Function to read spatial data from a database
@@ -148,7 +149,11 @@ read_sf = function(query = NULL,
   on.exit(DBI::dbDisconnect(con))
   # query
   message('Database: ', DBI::dbGetQuery(con, "SELECT current_database();"))
-  sf::st_read(con, query = query)
+  time = Sys.time()
+  dat = sf::st_read(con, query = query)
+  message('Query took: ', format(Sys.time() - time, digits = 1))
+  
+  dat
 }
 
 
@@ -223,7 +228,9 @@ send_query = function(query = NULL,
   on.exit(DBI::dbDisconnect(con))
   # query
   message('Database: ', DBI::dbGetQuery(con, "SELECT current_database();"))
+  time = Sys.time()
   DBI::dbSendQuery(con, query)
+  message('Query took: ', format(Sys.time() - time, digits = 1))
 }
 
 #' Functions to write a table to a database
@@ -311,6 +318,7 @@ write_tbl = function(dat = NULL,
   on.exit(DBI::dbDisconnect(con))
   # query
   db = DBI::dbGetQuery(con, "SELECT current_database();")$current_database
+  time = Sys.time()
   DBI::dbSendQuery(con, paste0("CREATE SCHEMA IF NOT EXISTS ", schema, ";"))
   DBI::dbWriteTable(con,
                     name = c(schema, tbl),
@@ -318,4 +326,5 @@ write_tbl = function(dat = NULL,
                     overwrite = overwrite,
                     row.names = FALSE)
   message('Table created: ', paste0(c(db, schema, tbl), collapse = '.'))
+  message('Query took: ', format(Sys.time() - time, digits = 1))
 }
