@@ -194,25 +194,26 @@ send_query = function(query = NULL,
                       dbname = NULL) {
   # credentials file
   if (!is.null(cred_file)) {
-    source(cred_file)
+    message('Sourcing cred_file: ', cred_file)
+    source(cred_file, local = TRUE)
   }
   # checking
   if (is.null(query)) {
     stop('No query supplied.')
   }
-  if (is.null(cred_file) && is.null(user)) {
+  if (is.null(user)) {
     stop('Provide a user.')
   }
-  if (is.null(cred_file) && is.null(host)) {
+  if (is.null(host)) {
     stop('Provide a host.')
   }
-  if (is.null(cred_file) && is.null(port)) {
+  if (is.null(port)) {
     stop('Provide a port.')
   }
-  if (is.null(cred_file) && is.null(password)) {
+  if (is.null(password)) {
     stop('Provide a password.')
   }
-  if (is.null(cred_file) && is.null(dbname)) {
+  if (is.null(dbname)) {
     stop('Provide a dbname.')
   }
   # connection
