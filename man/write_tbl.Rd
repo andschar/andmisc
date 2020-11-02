@@ -8,6 +8,8 @@ write_tbl(
   dat = NULL,
   schema = "public",
   tbl = NULL,
+  key = NULL,
+  comment_str = NULL,
   overwrite = TRUE,
   cred_file = NULL,
   host = NULL,
@@ -23,6 +25,10 @@ write_tbl(
 \item{schema}{database schema.}
 
 \item{tbl}{database table.}
+
+\item{key}{Set a primary key in table?}
+
+\item{comment_str}{Add a comment to table? Recommended.}
 
 \item{overwrite}{Should an existing database table be overwritten?
 TRUE (default).}

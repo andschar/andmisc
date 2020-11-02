@@ -241,6 +241,8 @@ send_query = function(query = NULL,
 #' @param tbl database table.
 #' @param overwrite Should an existing database table be overwritten?
 #' TRUE (default).
+#' @param key Set a primary key in table?
+#' @param comment_str Add a comment to table? Recommended.
 #' @param cred_file An .R file containing the necessary credentials to connect
 #' to a Postgres database. Can contain variables: user, host, port, password,
 #' dbname.
@@ -269,6 +271,8 @@ send_query = function(query = NULL,
 write_tbl = function(dat = NULL,
                      schema = 'public',
                      tbl = NULL,
+                     key = NULL,
+                     comment_str = NULL,
                      overwrite = TRUE,
                      cred_file = NULL,
                      host = NULL,
@@ -326,6 +330,15 @@ write_tbl = function(dat = NULL,
                     value = dat,
                     overwrite = overwrite,
                     row.names = FALSE)
+  if (!is.null(key)) {
+    DBI::dbSendQuery(con, paste0("ALTER TABLE ", paste0(schema, ".", tbl), " ",
+                                 "ADD PRIMARY KEY (", key, ");"))
+  }
+  if (!is.null(comment_str)) {
+    DBI::dbSendQuery(con, paste0("COMMENT ON TABLE ", paste0(schema, ".", tbl), " ",
+                                 "IS '", comment_str, "';"))
+  }
+  
   message('Table created: ', paste0(c(db, schema, tbl), collapse = '.'))
   message('Query took: ', format(Sys.time() - time, digits = 1))
 }
