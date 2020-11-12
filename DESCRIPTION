@@ -1,6 +1,6 @@
 Package: andmisc
-Version: 0.0.0.9009
-Date: 2020-11-02
+Version: 0.0.0.9010
+Date: 2020-11-12
 Title: Missceleaneous functions written by Andreas Scharmüller
 Authors@R: c(
     person("Andreas", "Scharmüller",
@@ -11,7 +11,8 @@ Authors@R: c(
 Maintainer: Andreas Scharmüller <andschar@protonmail.com>
 Imports:
     data.table,
-    DBI
+    DBI,
+    gh
 Suggests:
     RPostgreSQL,
     sf
