@@ -17,3 +17,7 @@ cl_read(table = "cl_identifiers", token = NULL)
 \description{
 Function to load lookup tables from the andschar/chem-lookup GitHub repository
 }
+\examples{
+cl_read('cl_identifiers')
+
+}

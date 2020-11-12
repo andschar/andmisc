@@ -7,6 +7,10 @@
 #' ~/.Renviron
 #' 
 #' @export 
+#' 
+#' @examples 
+#' cl_read('cl_identifiers')
+#' 
 cl_read = function(table = 'cl_identifiers',
                    token = NULL) {
   baseurl = 'https://raw.githubusercontent.com/andschar/chem-lookup/master'
