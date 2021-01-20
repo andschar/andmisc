@@ -4,7 +4,7 @@
 \alias{theme_as}
 \title{Custom ggplot2 theme}
 \usage{
-theme_as(base_size = 12, base_family = "Open Sans")
+theme_as(base_size = 12, base_family = "Open Sans", text_size = 14)
 }
 \arguments{
 \item{base_size}{base font size}

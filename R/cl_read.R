@@ -13,11 +13,12 @@
 #' 
 cl_read = function(table = 'cl_identifiers',
                    token = NULL) {
+  # NOTE move to zenodo!
   baseurl = 'https://raw.githubusercontent.com/andschar/chem-lookup/master'
   tmp = tempfile()
-  gh(paste0('GET ', file.path(baseurl, paste0(table, '.tsv'))),
-     .destfile = tmp,
-     .overwrite = TRUE,
-     token = token)
-  fread(tmp, na.strings = '')
+  gh::gh(paste0('GET ', file.path(baseurl, paste0(table, '.tsv'))),
+         .destfile = tmp,
+         .overwrite = TRUE,
+         .token = token)
+  data.table::fread(tmp, na.strings = '')
 }
