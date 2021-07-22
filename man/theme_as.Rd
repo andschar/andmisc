@@ -7,9 +7,11 @@
 theme_as(base_size = 12, base_family = "Open Sans", text_size = 14)
 }
 \arguments{
-\item{base_size}{base font size}
+\item{base_size}{Base font size.}
 
-\item{base_family}{base font family}
+\item{base_family}{Base font family.}
+
+\item{text_size}{Size of text.}
 }
 \description{
 Custom ggplot2 theme

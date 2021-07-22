@@ -1,8 +1,12 @@
 #' Custom ggplot2 theme
-#' @param  base_size base font size
-#' @param  base_family base font family
+#' @param base_size Base font size.
+#' @param base_family Base font family.
+#' @param text_size Size of text.
+#' 
 #' @import ggplot2
+#' 
 #' @export
+#' 
 #' @examples 
 #' library(ggplot2)
 #' p = ggplot(mtcars) + 
