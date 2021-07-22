@@ -1,3 +1,63 @@
+#' Connection function that handles argument or file inputs
+#' 
+#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' 
+#' @noRd
+#' 
+connection = function(cred_file,
+                      host,
+                      port,
+                      dbname,
+                      user,
+                      password) {
+  # arg list
+  l = list(cred_file = cred_file,
+           host = host,
+           port = port,
+           dbname = dbname,
+           user = user,
+           password = password)
+  # new environment cred_file
+  ee = new.env()
+  # credentials file
+  if (!is.null(cred_file)) {
+    message('Sourcing cred_file: ', cred_file)
+    sys.source(cred_file, envir = ee)
+    # source(cred_file, local = TRUE) # OLD
+  }
+  # select only 1 variable, prefer match.call() variables
+  host = c(l$host, ee$host)[1]
+  port = c(l$port, ee$port)[1]
+  dbname = c(l$dbname, ee$dbname)[1]
+  user = c(l$user, ee$user)[1]
+  password = c(l$password, ee$password)[1]
+  # checking
+  if (is.null(host)) {
+    stop('Provide a host.')
+  }
+  if (is.null(port)) {
+    stop('Provide a port.')
+  }
+  if (is.null(dbname)) {
+    stop('Provide a dbname.')
+  }
+  if (is.null(password)) {
+    stop('Provide a password.')
+  }
+  if (is.null(user)) {
+    stop('Provide a user.')
+  }
+  # connection
+  DBI::dbConnect(
+    RPostgreSQL::PostgreSQL(),
+    host = host,
+    port = port,
+    dbname = dbname,
+    user = user,
+    password = password
+  )
+}
+
 #' Function to read from a database
 #'
 #' @param query A query string.
@@ -33,39 +93,17 @@ read_query = function(query = NULL,
                       dbname = NULL,
                       user = NULL,
                       password = NULL) {
-  # credentials file
-  if (!is.null(cred_file)) {
-    message('Sourcing cred_file: ', cred_file)
-    source(cred_file, local = TRUE)
-  }
-  # checking
+  # checks
   if (is.null(query)) {
     stop('No query supplied.')
   }
-  if (is.null(host)) {
-    stop('Provide a host.')
-  }
-  if (is.null(port)) {
-    stop('Provide a port.')
-  }
-  if (is.null(dbname)) {
-    stop('Provide a dbname.')
-  }
-  if (is.null(password)) {
-    stop('Provide a password.')
-  }
-  if (is.null(user)) {
-    stop('Provide a user.')
-  }
   # connection
-  con = DBI::dbConnect(
-    RPostgreSQL::PostgreSQL(),
-    host = host,
-    port = port,
-    dbname = dbname,
-    user = user,
-    password = password
-  )
+  con = connection(cred_file = cred_file,
+                   host = host,
+                   port = port,
+                   dbname = dbname,
+                   user = user,
+                   password = password)
   # bigint = 'integer') # to not return integer64 https://stackoverflow.com/questions/45171762/set-dbgetquery-to-return-integer64-as-integer
   on.exit(DBI::dbDisconnect(con))
   # query
@@ -112,39 +150,17 @@ read_sf = function(query = NULL,
                    dbname = NULL,
                    user = NULL,
                    password = NULL) {
-  # credentials file
-  if (!is.null(cred_file)) {
-    message('Sourcing cred_file: ', cred_file)
-    source(cred_file, local = TRUE)
-  }
-  # checking
+  # checks
   if (is.null(query)) {
     stop('No query supplied.')
   }
-  if (is.null(host)) {
-    stop('Provide a host.')
-  }
-  if (is.null(port)) {
-    stop('Provide a port.')
-  }
-  if (is.null(dbname)) {
-    stop('Provide a dbname.')
-  }
-  if (is.null(password)) {
-    stop('Provide a password.')
-  }
-  if (is.null(user)) {
-    stop('Provide a user.')
-  }
   # connection
-  con = DBI::dbConnect(
-    RPostgreSQL::PostgreSQL(),
-    host = host,
-    port = port,
-    dbname = dbname,
-    user = user,
-    password = password
-  )
+  con = connection(cred_file = cred_file,
+                   host = host,
+                   port = port,
+                   dbname = dbname,
+                   user = user,
+                   password = password)
   # bigint = 'integer') # to not return integer64 https://stackoverflow.com/questions/45171762/set-dbgetquery-to-return-integer64-as-integer
   on.exit(DBI::dbDisconnect(con))
   # query
@@ -192,39 +208,17 @@ send_query = function(query = NULL,
                       port = NULL,
                       password = NULL,
                       dbname = NULL) {
-  # credentials file
-  if (!is.null(cred_file)) {
-    message('Sourcing cred_file: ', cred_file)
-    source(cred_file, local = TRUE)
-  }
-  # checking
+  # checks
   if (is.null(query)) {
     stop('No query supplied.')
   }
-  if (is.null(user)) {
-    stop('Provide a user.')
-  }
-  if (is.null(host)) {
-    stop('Provide a host.')
-  }
-  if (is.null(port)) {
-    stop('Provide a port.')
-  }
-  if (is.null(password)) {
-    stop('Provide a password.')
-  }
-  if (is.null(dbname)) {
-    stop('Provide a dbname.')
-  }
   # connection
-  con = DBI::dbConnect(
-    RPostgreSQL::PostgreSQL(),
-    dbname = dbname,
-    host = host,
-    port = port,
-    user = user,
-    password = password
-  )
+  con = connection(cred_file = cred_file,
+                   host = host,
+                   port = port,
+                   dbname = dbname,
+                   user = user,
+                   password = password)
   # bigint = 'integer') # to not return integer64 https://stackoverflow.com/questions/45171762/set-dbgetquery-to-return-integer64-as-integer
   on.exit(DBI::dbDisconnect(con))
   # query
@@ -280,45 +274,19 @@ write_tbl = function(dat = NULL,
                      dbname = NULL,
                      user = NULL,
                      password = NULL) {
-  # credentials file
-  if (!is.null(cred_file)) {
-    message('Sourcing cred_file: ', cred_file)
-    source(cred_file, local = TRUE)
-  }
-  # checking
   if (is.null(dat)) {
-    stop('No data table supplied.')
-  }
-  if (is.null(schema)) {
-    stop('No database schema supplied.')
+    stop('No data.frame supplied.')
   }
   if (is.null(tbl)) {
-    stop('No database table supplied.')
-  }
-  if (is.null(host)) {
-    stop('Provide a host.')
-  }
-  if (is.null(port)) {
-    stop('Provide a port.')
-  }
-  if (is.null(dbname)) {
-    stop('Provide a dbname.')
-  }
-  if (is.null(password)) {
-    stop('Provide a password.')
-  }
-  if (is.null(user)) {
-    stop('Provide a user.')
+    stop('No table supplied.')
   }
   # connection
-  con = DBI::dbConnect(
-    RPostgreSQL::PostgreSQL(),
-    host = host,
-    port = port,
-    dbname = dbname,
-    user = user,
-    password = password
-  )
+  con = connection(cred_file = cred_file,
+                   host = host,
+                   port = port,
+                   dbname = dbname,
+                   user = user,
+                   password = password)
   # bigint = 'integer') # to not return integer64 https://stackoverflow.com/questions/45171762/set-dbgetquery-to-return-integer64-as-integer
   on.exit(DBI::dbDisconnect(con))
   # query
