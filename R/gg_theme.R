@@ -1,19 +1,12 @@
 #' Custom ggplot2 theme
+#' 
 #' @param base_size Base font size.
 #' @param base_family Base font family.
 #' @param text_size Size of text.
 #' 
-#' @import ggplot2
+#' @import ggplot2 extrafont
 #' 
 #' @export
-#' 
-#' @examples 
-#' library(ggplot2)
-#' p = ggplot(mtcars) + 
-#'  geom_point(aes(x = wt, y = mpg, 
-#' colour = factor(gear))) + facet_wrap(~am)
-#' p
-#' p + theme_as()
 #' 
 theme_as = function(base_size = 12,
                     base_family = 'Open Sans',

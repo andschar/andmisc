@@ -16,12 +16,3 @@ theme_as(base_size = 12, base_family = "Open Sans", text_size = 14)
 \description{
 Custom ggplot2 theme
 }
-\examples{
-library(ggplot2)
-p = ggplot(mtcars) + 
- geom_point(aes(x = wt, y = mpg, 
-colour = factor(gear))) + facet_wrap(~am)
-p
-p + theme_as()
-
-}

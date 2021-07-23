@@ -4,12 +4,14 @@
 \alias{log_msg}
 \title{Function to log a msg to a file}
 \usage{
-log_msg(msg = "script run.", file = "script.log")
+log_msg(msg = "script run.", dir = NULL, file = "script.log")
 }
 \arguments{
 \item{msg}{Message to log.}
 
-\item{file}{file to log to. Stored in the root directory.}
+\item{dir}{A directory to write the report to.}
+
+\item{file}{file to log to.}
 }
 \description{
 Function to log a msg to a file

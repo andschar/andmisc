@@ -11,11 +11,15 @@ Authors@R: c(
 Maintainer: Andreas Scharmüller <andschar@protonmail.com>
 Description: Missceleanous functions written by Andreas Scharmüller.
 Imports:
+    utils,
     checkmate,
     data.table,
     DBI,
     gh,
-    ggplot2
+    ggplot2,
+    extrafont,
+    knitr,
+    stringr
 Suggests:
     RPostgreSQL,
     sf

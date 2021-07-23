@@ -10,5 +10,5 @@
 #' size(iris)
 #' 
 size = function(obj) {
-  format(object.size(obj), unit = 'auto')
+  format(utils::object.size(obj), unit = 'auto')
 }

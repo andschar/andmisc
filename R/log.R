@@ -1,7 +1,8 @@
 #' Function to log a msg to a file
 #' 
 #' @param msg Message to log.
-#' @param file file to log to. Stored in the root directory.
+#' @param dir A directory to write the report to.
+#' @param file file to log to.
 #' 
 #' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
 #' 
@@ -14,11 +15,16 @@
 #' }
 #' 
 log_msg = function(msg = 'script run.',
+                   dir = NULL,
                    file = 'script.log') {
+  # checks
+  if (is.null(dir)) {
+    dir = getwd()
+  }
   script = basename(sys.frame(1)$ofile)
   out = paste(paste(Sys.time(), script, 'run: ', sep = ' '),
               msg,
               sep = '\t')
-  write(out, file.path(prj, file), append = TRUE)
+  write(out, file.path(dir, file), append = TRUE)
   message(out)
 }
