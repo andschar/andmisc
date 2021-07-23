@@ -1,0 +1,106 @@
+#' Function to create file name (path) string.
+#' 
+#' @description A file path is created in the form <dir>/<prequel><arg><ext>.
+#' 
+#' @param dir A directory to which the path should point to.
+#' @param prequel Prequel that is appended to the file name (e.g. '~/project').
+#' @param arg A named list or vector of arguments that are used for creating
+#' the file name. Once created, they can be extracted with \code{denamer()}.
+#' @param sep String that separates names and entries of the arg
+#' (Default: <_>).
+#' @param ext Should a file extension be added at the end of the string?
+#' (e.g. .png)?
+#'
+#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' 
+#' @export
+#' 
+#' @examples
+#' namer(dir = tempdir(),
+#'       prequel = 'test-prequel',
+#'       arg = list(weight = 12,
+#'                  color = 'white'),
+#'       sep = '_',
+#'       ext = '.png')
+#'
+namer = function(dir = NULL,
+                 prequel = NULL,
+                 arg = NULL,
+                 sep = '_',
+                 ext = NULL) {
+  # checks
+  if (is.null(dir)) {
+    stop('Please specify a directory.')
+  }
+  if (is.null(arg) || any(names(arg) == '')) {
+    stop('At least one named string must be passed in arg.')
+  }
+  # concatenate
+  if (is.null(prequel)) {
+    middle = paste0(names(arg), sep, arg, collapse = sep)
+  } else {
+    middle = paste0(prequel, sep,
+                    paste0(names(arg), sep, arg, collapse = sep))
+  }
+  if (!is.null(ext)) {
+    ext = sub('\\.+', '.', paste0('.', ext))
+  }
+  # final
+  out = file.path(dir, paste0(middle, ext))
+  
+  return(out)
+}
+
+#' Function to extract arguments from an object created by \code{namer()}.
+#' 
+#' @param string A string created by \code{namer()}.
+#' @param arg Which argument should be extracted?
+#' @param sep Separator used.
+#' 
+#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' 
+#' @export
+#' 
+#' @examples 
+#' sep = '_'
+#' denamer(
+#'  namer(dir = tempdir(),
+#'         prequel = 'test-prequel',
+#'         arg = list(weight = 12,
+#'                    color = 'white'),
+#'         sep = sep,
+#'         ext = '.png'),
+#'   arg = c('color', 'weight'),
+#'   sep = sep
+#' )
+#'
+denamer = function(string = NULL,
+                   arg = NULL,
+                   sep = '_') {
+  # checks
+  if (is.null(string)) {
+    stop('Please provide a string to dename.')
+  }
+  if (is.null(arg)) {
+    stop('Please provide at least one arg to be extracted from string.')
+  }
+  # extract
+  if (length(arg) == 1) {
+    # much faster for only on-length vectors
+    out = sub(
+      paste0(arg, sep),
+      '',
+      stringr::str_extract(string, paste0(arg, sep, '[[:alnum:]]+')),
+      fixed = TRUE
+    )
+  } else {
+    out = sub(
+      paste0(paste0(arg, sep), collapse = '|'),
+      '',
+      stringr::str_extract(string, paste0(arg, sep, '[[:alnum:]]+'))
+    )
+  }
+  names(out) = arg
+  
+  return(out)
+}
