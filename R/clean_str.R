@@ -1,5 +1,5 @@
 #' Function to clean string
-#' @param x a character vector.2
+#' @param x a character vector.
 #' @export
 #' 
 clean_str = function(x) {

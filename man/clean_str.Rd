@@ -7,7 +7,7 @@
 clean_str(x)
 }
 \arguments{
-\item{x}{a character vector.2}
+\item{x}{a character vector.}
 }
 \description{
 Function to clean string
