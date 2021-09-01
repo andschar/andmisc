@@ -58,16 +58,6 @@ connection = function(cred_file,
   )
 }
 
-#' Helper function to address table.
-#'
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
-#' 
-#' @noRd
-#' 
-schema_tbl = function(schema, tbl) {
-  paste0(c(schema, tbl), collapse = ".")
-}
-
 #' Function to read from a database.
 #'
 #' @param query A query string.
@@ -253,11 +243,13 @@ write_tbl = function(dat = NULL,
                     overwrite = overwrite,
                     row.names = FALSE)
   if (!is.null(key)) {
-    DBI::dbSendQuery(con, paste0("ALTER TABLE ", paste0(schema, ".", tbl), " ",
+    DBI::dbSendQuery(con, paste0("ALTER TABLE ",
+                                 paste0(c(schema, tbl), collapse = "."), " ",
                                  "ADD PRIMARY KEY (", key, ");"))
   }
   if (!is.null(comment_str)) {
-    DBI::dbSendQuery(con, paste0("COMMENT ON TABLE ", paste0(schema, ".", tbl), " ",
+    DBI::dbSendQuery(con, paste0("COMMENT ON TABLE ",
+                                 paste0(c(schema, tbl), collapse = "."), " ",
                                  "IS '", comment_str, "';"))
   }
   
@@ -399,11 +391,13 @@ write_sf = function(dat = NULL,
                delete_layer = overwrite,
                row.names = FALSE)
   if (!is.null(key)) {
-    DBI::dbSendQuery(con, paste0("ALTER TABLE ", schema_tbl(schema, tbl), " ",
+    DBI::dbSendQuery(con, paste0("ALTER TABLE ",
+                                 paste0(c(schema, tbl), collapse = "."), " ",
                                  "ADD PRIMARY KEY (", key, ");"))
   }
   if (!is.null(comment_str)) {
-    DBI::dbSendQuery(con, paste0("COMMENT ON TABLE ", schema_tbl(schema, tbl), " ",
+    DBI::dbSendQuery(con, paste0("COMMENT ON TABLE ",
+                                 paste0(c(schema, tbl), collapse = "."), " ",
                                  "IS '", comment_str, "';"))
   }
   message('Table created: ', paste0(c(db, schema, tbl), collapse = '.'))

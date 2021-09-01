@@ -2,7 +2,7 @@
 % Please edit documentation in R/sql_io.R
 \name{read_query}
 \alias{read_query}
-\title{Function to read from a database}
+\title{Function to read from a database.}
 \usage{
 read_query(
   query = NULL,
@@ -37,7 +37,7 @@ cred_file.}
 in cred_file.}
 }
 \description{
-Function to read from a database
+Function to read from a database.
 }
 \examples{
 \donttest{

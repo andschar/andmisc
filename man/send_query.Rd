@@ -2,7 +2,7 @@
 % Please edit documentation in R/sql_io.R
 \name{send_query}
 \alias{send_query}
-\title{Function to send to a database}
+\title{Function to send to a database.}
 \usage{
 send_query(
   query = NULL,
@@ -37,7 +37,7 @@ in cred_file.}
 in cred_file.}
 }
 \description{
-Function to send to a database
+Function to send to a database.
 }
 \examples{
 \donttest{

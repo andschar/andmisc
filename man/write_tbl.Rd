@@ -2,11 +2,11 @@
 % Please edit documentation in R/sql_io.R
 \name{write_tbl}
 \alias{write_tbl}
-\title{Functions to write a table to a database}
+\title{Functions to write a table to a database.}
 \usage{
 write_tbl(
   dat = NULL,
-  schema = "public",
+  schema = NULL,
   tbl = NULL,
   key = NULL,
   comment_str = NULL,
@@ -53,7 +53,7 @@ cred_file.}
 in cred_file.}
 }
 \description{
-Functions to write a table to a database
+Functions to write a table to a database.
 }
 \examples{
 \donttest{

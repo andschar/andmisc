@@ -2,7 +2,7 @@
 % Please edit documentation in R/sql_io.R
 \name{read_sf}
 \alias{read_sf}
-\title{Function to read spatial data from a database}
+\title{Function to read spatial data from a database.}
 \usage{
 read_sf(
   query = NULL,
@@ -37,7 +37,7 @@ cred_file.}
 in cred_file.}
 }
 \description{
-Function to read spatial data from a database
+Function to read spatial data from a database.
 }
 \examples{
 \donttest{
