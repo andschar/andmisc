@@ -14,7 +14,7 @@
 #' file.path2(tempdir(), 'test', 'blub')
 #' 
 file.path2 = function(..., fsep = .Platform$file.sep) {
-  path = file.path(..., fesp = fsep)
+  path = file.path(..., fsep = fsep)
   dir.create(path, showWarnings = FALSE)
   path
 }
