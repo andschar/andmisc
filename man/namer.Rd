@@ -4,7 +4,13 @@
 \alias{namer}
 \title{Function to create file name (path) string.}
 \usage{
-namer(dir = NULL, prequel = NULL, arg = NULL, sep = "_", ext = NULL)
+namer(
+  dir = NULL,
+  prequel = NULL,
+  arg = NULL,
+  sep = getOption("sep"),
+  ext = NULL
+)
 }
 \arguments{
 \item{dir}{A directory to which the path should point to.}

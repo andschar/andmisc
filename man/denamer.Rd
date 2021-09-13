@@ -4,7 +4,7 @@
 \alias{denamer}
 \title{Function to extract arguments from an object created by \code{namer()}.}
 \usage{
-denamer(string = NULL, arg = NULL, sep = "_")
+denamer(string = NULL, arg = NULL, sep = getOption("sep"))
 }
 \arguments{
 \item{string}{A string created by \code{namer()}.}

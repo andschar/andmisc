@@ -26,14 +26,17 @@
 namer = function(dir = NULL,
                  prequel = NULL,
                  arg = NULL,
-                 sep = '_',
+                 sep = getOption('sep'),
                  ext = NULL) {
-  # checks
-  if (is.null(dir)) {
-    stop('Please specify a directory.')
+  if (is.null(dir) && is.null(prequel)) {
+    stop('At least one of the arguments "dir" or "prequel" must be specified.')
   }
+  # checks
   if (is.null(arg) || any(names(arg) == '')) {
     stop('At least one named string must be passed in arg.')
+  }
+  if (is.null(sep)) {
+    sep = '_'
   }
   # concatenate
   if (is.null(prequel)) {
@@ -45,10 +48,12 @@ namer = function(dir = NULL,
   if (!is.null(ext)) {
     ext = sub('\\.+', '.', paste0('.', ext))
   }
-  # final
-  out = file.path(dir, paste0(middle, ext))
-  
-  return(out)
+  # out
+  if (is.null(dir)) {
+    paste0(middle, ext)
+  } else {
+    file.path(dir, paste0(middle, ext))
+  }
 }
 
 #' Function to extract arguments from an object created by \code{namer()}.
@@ -76,13 +81,16 @@ namer = function(dir = NULL,
 #'
 denamer = function(string = NULL,
                    arg = NULL,
-                   sep = '_') {
+                   sep = getOption('sep')) {
   # checks
   if (is.null(string)) {
     stop('Please provide a string to dename.')
   }
   if (is.null(arg)) {
     stop('Please provide at least one arg to be extracted from string.')
+  }
+  if (is.null(sep)) {
+    sep = '_'
   }
   # extract
   if (length(arg) == 1) {

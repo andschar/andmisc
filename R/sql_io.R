@@ -308,8 +308,10 @@ read_sf = function(query = NULL,
   # query
   message('Database: ', DBI::dbGetQuery(con, "SELECT current_database();"))
   time = Sys.time()
+  dat = sf::st_read(con, query = query)
   message('Query took: ', format(Sys.time() - time, digits = 1))
-  sf::st_read(con, query = query)
+  
+  dat
 }
 
 #' Functions to write a spatial table to a database.
