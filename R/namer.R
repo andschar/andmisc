@@ -98,14 +98,16 @@ denamer = function(string = NULL,
     out = sub(
       paste0(arg, sep),
       '',
-      stringr::str_extract(string, paste0(arg, sep, '[[:alnum:]]+')),
+      stringr::str_extract(string,
+                           paste0(arg, sep, '\\w+')),
       fixed = TRUE
     )
   } else {
     out = sub(
       paste0(paste0(arg, sep), collapse = '|'),
       '',
-      stringr::str_extract(string, paste0(arg, sep, '[[:alnum:]]+'))
+      stringr::str_extract(string, paste0(arg, sep, '\\w+')),
+      fixed = TRUE
     )
   }
   names(out) = arg
