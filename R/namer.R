@@ -93,9 +93,22 @@ denamer = function(string = NULL,
     sep = '_'
   }
   # extract
-  string_split = strsplit(string, sep, fixed = TRUE)[[1]]
-  out = string_split[ grep(paste0(arg, collapse = '|'), o) + 1 ]
+  if (length(arg) == 1) {
+    # much faster for only on-length vectors
+    out = sub(
+      paste0(arg, sep),
+      '',
+      stringr::str_extract(string, paste0(arg, sep, '[[:alnum:]]+')),
+      fixed = TRUE
+    )
+  } else {
+    out = sub(
+      paste0(paste0(arg, sep), collapse = '|'),
+      '',
+      stringr::str_extract(string, paste0(arg, sep, '[[:alnum:]]+'))
+    )
+  }
   names(out) = arg
-  
+
   return(out)
 }
