@@ -10,11 +10,18 @@ chck_dupl = function(dat, col = NULL) {
   checkmate::assert_data_frame(dat)
   if (is.null(col)) { col = names(dat) }
   checkmate::assert_vector(col)
-  # check duplicates
-  dat2 = dat[ names(dat) %in% col ]
-  chck_val = which(sapply(dat2, function(x) any(duplicated(x))))
-  if (length(chck_val) != 0) {
-    stop("Duplicates in data. Column(s):\n\t", paste0(names(chck_val), collapse = ', '), ".")
+  # data.table
+  data.table::setDT(dat)
+  # check NA
+  dupl_n = sapply(dat[ , .SD, .SDcols = col ],
+                function(x) length(which(is.na(x))))
+  dupl_perc = round(dupl_n / nrow(dat) * 1e2, 1)
+  # message
+  if (any(na_perc > 0)) {
+    na_col = na_perc[ na_perc > 0 ]
+    warning('Duplicates in columns:\n\t',
+            paste0(paste(names(na_col), na_col, sep = ': '),
+                   collapse = '\n\t'))
   }
 }
 
@@ -30,10 +37,17 @@ chck_na = function(dat, col = NULL) {
   checkmate::assert_data_frame(dat)
   if (is.null(col)) { col = names(dat) }
   checkmate::assert_vector(col)
+  # data.table
+  data.table::setDT(dat)
   # check NA
-  dat2 = dat[ names(dat) %in% col ]
-  chck_val = which(sapply(dat2, function(x) any(is.na(x))))
-  if (length(chck_val) != 0) {
-    stop("NAs in data. Column(s):\n\t", paste0(names(chck_val), collapse = ', '), ".")
+  na_n = sapply(dat[ , .SD, .SDcols = col ],
+                function(x) length(which(is.na(x))))
+  na_perc = round(na_n / nrow(dat) * 1e2, 1)
+  # message
+  if (any(na_perc > 0)) {
+    na_col = na_perc[ na_perc > 0 ]
+    warning('NAs in columns:\n\t',
+            paste0(paste(names(na_col), na_col, sep = ': '),
+                   collapse = '\n\t'))
   }
 }
