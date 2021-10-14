@@ -110,7 +110,9 @@ denamer = function(string = NULL,
       fixed = TRUE
     )
   }
-  names(out) = arg
+  if (length(out) > 0) {
+    names(out) = arg
+  }
 
   return(out)
 }
