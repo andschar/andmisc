@@ -10,7 +10,8 @@ fixweek(x)
 \item{x}{a week number (as string or character).}
 }
 \description{
-This is important in as.Date() parsing.
+Convenience function to turn week 1-9 into 01-09. Also rounds
+float values. This is important in as.Date() parsing.
 }
 \examples{
 fixweek(9)
