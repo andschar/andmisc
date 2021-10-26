@@ -1,6 +1,6 @@
 Package: andmisc
-Version: 0.0.0.9036
-Date: 2021-10-20
+Version: 0.0.0.9037
+Date: 2021-10-26
 Title: Missceleaneous Functions Written by Andreas Scharmüller
 Authors@R: c(
     person("Andreas", "Scharmüller",
