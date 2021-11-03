@@ -14,11 +14,11 @@ chck_dupl = function(dat, col = NULL) {
   data.table::setDT(dat)
   # check NA
   dupl_n = sapply(dat[ , .SD, .SDcols = col ],
-                function(x) length(which(is.na(x))))
+                function(x) length(which(duplicated(x))))
   dupl_perc = round(dupl_n / nrow(dat) * 1e2, 1)
   # message
-  if (any(na_perc > 0)) {
-    na_col = na_perc[ na_perc > 0 ]
+  if (any(dupl_perc > 0)) {
+    na_col = dupl_perc[ dupl_perc > 0 ]
     warning('Duplicates in columns:\n\t',
             paste0(paste(names(na_col), na_col, sep = ': '),
                    collapse = '\n\t'))
