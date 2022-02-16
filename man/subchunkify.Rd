@@ -4,14 +4,27 @@
 \alias{subchunkify}
 \title{Function to create different heights and widths in RMarkdown Code Chunks which are Created automatically}
 \usage{
-subchunkify(g, fig_height = 7, fig_width = 5)
+subchunkify(
+  g,
+  fig.height = 7,
+  fig.width = 5,
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
 }
 \arguments{
 \item{g}{A plot.}
 
-\item{fig_height}{The Figure height as in an RMarkdown document.}
+\item{fig.height}{The Figure height as in an RMarkdown document.}
 
-\item{fig_width}{The Figure width as in an RMarkdown document.}
+\item{fig.width}{The Figure width as in an RMarkdown document.}
+
+\item{echo}{As in an RMarkdown document.}
+
+\item{message}{As in an RMarkdown document.}
+
+\item{warning}{As in an RMarkdown document.}
 }
 \description{
 Taken from StackOverflow.
