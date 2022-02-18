@@ -4,12 +4,10 @@
 \alias{fread2}
 \title{Convenience data.table::fread() wrapper.}
 \usage{
-fread2(..., na.strings = "")
+fread2(...)
 }
 \arguments{
 \item{...}{Any parameters for fread().}
-
-\item{na.strings}{As in fread()}
 }
 \description{
 Convenience data.table::fread() wrapper.

@@ -1,7 +1,6 @@
 #' Convenience data.table::fread() wrapper.
 #'  
 #' @param ... Any parameters for fread().
-#' @param na.strings As in fread()
 #' 
 #' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
 #' 
@@ -12,8 +11,8 @@
 #' write.csv(iris, fl)
 #' fread2(fl)
 #'
-fread2 = function(..., na.strings = '') {
-  fread(..., na.strings = na.strings)
+fread2 = function(...) {
+  fread(...)
 }
 
 #' Convenience data.table::fwrite() wrapper.
