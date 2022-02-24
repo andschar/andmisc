@@ -9,7 +9,8 @@ connection = function(cred_file,
                       port,
                       dbname,
                       user,
-                      password) {
+                      password,
+                      quiet = FALSE) {
   # arg list
   l = list(cred_file = cred_file,
            host = host,
@@ -21,7 +22,9 @@ connection = function(cred_file,
   ee = new.env()
   # credentials file
   if (!is.null(cred_file)) {
-    message('Sourcing cred_file: ', cred_file)
+    if (!quiet) {
+      message('Sourcing cred_file: ', cred_file)
+    }
     sys.source(cred_file, envir = ee)
     # source(cred_file, local = TRUE) # OLD
   }
@@ -92,7 +95,8 @@ read_query = function(query = NULL,
                       port = NULL,
                       dbname = NULL,
                       user = NULL,
-                      password = NULL) {
+                      password = NULL,
+                      quiet = FALSE) {
   # checks
   if (is.null(query)) {
     stop('No query supplied.')
@@ -103,14 +107,19 @@ read_query = function(query = NULL,
                    port = port,
                    dbname = dbname,
                    user = user,
-                   password = password)
+                   password = password,
+                   quiet = quiet)
   # bigint = 'integer') # to not return integer64 https://stackoverflow.com/questions/45171762/set-dbgetquery-to-return-integer64-as-integer
   on.exit(DBI::dbDisconnect(con))
   # query
-  message('Database: ', DBI::dbGetQuery(con, "SELECT current_database();"))
+  if (!quiet) {
+    message('Database: ', DBI::dbGetQuery(con, "SELECT current_database();"))
+  }
   time = Sys.time()
   dat = DBI::dbGetQuery(con, query)
-  message('Query took: ', format(Sys.time() - time, digits = 1))
+  if (!quiet) {
+    message('Query took: ', format(Sys.time() - time, digits = 1))
+  }
   
   data.table::as.data.table(dat)
 }
@@ -164,10 +173,14 @@ send_query = function(query = NULL,
   # bigint = 'integer') # to not return integer64 https://stackoverflow.com/questions/45171762/set-dbgetquery-to-return-integer64-as-integer
   on.exit(DBI::dbDisconnect(con))
   # query
-  message('Database: ', DBI::dbGetQuery(con, "SELECT current_database();"))
+  if (!quiet) {
+    message('Database: ', DBI::dbGetQuery(con, "SELECT current_database();"))
+  }
   time = Sys.time()
   DBI::dbSendQuery(con, query)
-  message('Query took: ', format(Sys.time() - time, digits = 1))
+  if (!quiet) {
+    message('Query took: ', format(Sys.time() - time, digits = 1))
+  }
 }
 
 #' Functions to write a table to a database.
@@ -252,9 +265,10 @@ write_tbl = function(dat = NULL,
                                  paste0(c(schema, tbl), collapse = "."), " ",
                                  "IS '", comment_str, "';"))
   }
-  
-  message('Table created: ', paste0(c(db, schema, tbl), collapse = '.'))
-  message('Query took: ', format(Sys.time() - time, digits = 1))
+  if (!quiet) {
+    message('Table created: ', paste0(c(db, schema, tbl), collapse = '.'))
+    message('Query took: ', format(Sys.time() - time, digits = 1))
+  }
 }
 
 #' Function to read spatial data from a database.
@@ -306,10 +320,14 @@ read_sf = function(query = NULL,
   # bigint = 'integer') # to not return integer64 https://stackoverflow.com/questions/45171762/set-dbgetquery-to-return-integer64-as-integer
   on.exit(DBI::dbDisconnect(con))
   # query
-  message('Database: ', DBI::dbGetQuery(con, "SELECT current_database();"))
+  if (!quiet) {
+    message('Database: ', DBI::dbGetQuery(con, "SELECT current_database();"))
+  }
   time = Sys.time()
   dat = sf::st_read(con, query = query)
-  message('Query took: ', format(Sys.time() - time, digits = 1))
+  if (!quiet) {
+    message('Query took: ', format(Sys.time() - time, digits = 1))
+  }
   
   dat
 }
@@ -402,6 +420,8 @@ write_sf = function(dat = NULL,
                                  paste0(c(schema, tbl), collapse = "."), " ",
                                  "IS '", comment_str, "';"))
   }
-  message('Table created: ', paste0(c(db, schema, tbl), collapse = '.'))
-  message('Query took: ', format(Sys.time() - time, digits = 1))
+  if (!quiet) {
+    message('Table created: ', paste0(c(db, schema, tbl), collapse = '.'))
+    message('Query took: ', format(Sys.time() - time, digits = 1))
+  }
 }

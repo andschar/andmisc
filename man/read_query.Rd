@@ -11,7 +11,8 @@ read_query(
   port = NULL,
   dbname = NULL,
   user = NULL,
-  password = NULL
+  password = NULL,
+  quiet = FALSE
 )
 }
 \arguments{
