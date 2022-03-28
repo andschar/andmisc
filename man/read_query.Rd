@@ -36,6 +36,8 @@ cred_file.}
 
 \item{password}{Optional password Overwritten if \code{password} is defined
 in cred_file.}
+
+\item{quiet}{Quiet function call?}
 }
 \description{
 Function to read from a database.

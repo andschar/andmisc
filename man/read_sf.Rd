@@ -11,7 +11,8 @@ read_sf(
   port = NULL,
   dbname = NULL,
   user = NULL,
-  password = NULL
+  password = NULL,
+  quiet = FALSE
 )
 }
 \arguments{
@@ -35,6 +36,8 @@ cred_file.}
 
 \item{password}{Optional password Overwritten if \code{password} is defined
 in cred_file.}
+
+\item{quiet}{Quiet function call?}
 }
 \description{
 Function to read spatial data from a database.

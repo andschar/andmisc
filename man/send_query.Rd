@@ -11,7 +11,8 @@ send_query(
   host = NULL,
   port = NULL,
   password = NULL,
-  dbname = NULL
+  dbname = NULL,
+  quiet = FALSE
 )
 }
 \arguments{
@@ -35,6 +36,8 @@ in cred_file.}
 
 \item{dbname}{Optional dbname Overwritten if \code{dbname} is defined
 in cred_file.}
+
+\item{quiet}{Quiet function call?}
 }
 \description{
 Function to send to a database.

@@ -77,6 +77,7 @@ connection = function(cred_file,
 #' cred_file.
 #' @param password Optional password Overwritten if \code{password} is defined
 #' in cred_file.
+#' @param quiet Quiet function call?
 #' 
 #' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
 #' 
@@ -140,6 +141,7 @@ read_query = function(query = NULL,
 #' in cred_file.
 #' @param dbname Optional dbname Overwritten if \code{dbname} is defined
 #' in cred_file.
+#' @param quiet Quiet function call?
 #' 
 #' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
 #' 
@@ -158,7 +160,8 @@ send_query = function(query = NULL,
                       host = NULL,
                       port = NULL,
                       password = NULL,
-                      dbname = NULL) {
+                      dbname = NULL,
+                      quiet = FALSE) {
   # checks
   if (is.null(query)) {
     stop('No query supplied.')
@@ -169,7 +172,8 @@ send_query = function(query = NULL,
                    port = port,
                    dbname = dbname,
                    user = user,
-                   password = password)
+                   password = password,
+                   quiet = quiet)
   # bigint = 'integer') # to not return integer64 https://stackoverflow.com/questions/45171762/set-dbgetquery-to-return-integer64-as-integer
   on.exit(DBI::dbDisconnect(con))
   # query
@@ -205,6 +209,7 @@ send_query = function(query = NULL,
 #' in cred_file.
 #' @param dbname Optional dbname Overwritten if \code{dbname} is defined
 #' in cred_file.
+#' @param quiet Quiet function call?
 #' 
 #' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
 #' 
@@ -228,7 +233,8 @@ write_tbl = function(dat = NULL,
                      port = NULL,
                      dbname = NULL,
                      user = NULL,
-                     password = NULL) {
+                     password = NULL,
+                     quiet = FALSE) {
   if (is.null(dat)) {
     stop('No data.frame supplied.')
   }
@@ -241,7 +247,8 @@ write_tbl = function(dat = NULL,
                    port = port,
                    dbname = dbname,
                    user = user,
-                   password = password)
+                   password = password,
+                   quiet = quiet)
   # bigint = 'integer') # to not return integer64 https://stackoverflow.com/questions/45171762/set-dbgetquery-to-return-integer64-as-integer
   on.exit(DBI::dbDisconnect(con))
   # query
@@ -287,6 +294,7 @@ write_tbl = function(dat = NULL,
 #' cred_file.
 #' @param password Optional password Overwritten if \code{password} is defined
 #' in cred_file.
+#' @param quiet Quiet function call?
 #' 
 #' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
 #' 
@@ -305,7 +313,8 @@ read_sf = function(query = NULL,
                    port = NULL,
                    dbname = NULL,
                    user = NULL,
-                   password = NULL) {
+                   password = NULL,
+                   quiet = FALSE) {
   # checks
   if (is.null(query)) {
     stop('No query supplied.')
@@ -316,7 +325,8 @@ read_sf = function(query = NULL,
                    port = port,
                    dbname = dbname,
                    user = user,
-                   password = password)
+                   password = password,
+                   quiet = quiet)
   # bigint = 'integer') # to not return integer64 https://stackoverflow.com/questions/45171762/set-dbgetquery-to-return-integer64-as-integer
   on.exit(DBI::dbDisconnect(con))
   # query
@@ -354,6 +364,7 @@ read_sf = function(query = NULL,
 #' in cred_file.
 #' @param dbname Optional dbname Overwritten if \code{dbname} is defined
 #' in cred_file.
+#' @param quiet Quiet function call?
 #' 
 #' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
 #' 
@@ -381,7 +392,8 @@ write_sf = function(dat = NULL,
                     port = NULL,
                     dbname = NULL,
                     user = NULL,
-                    password = NULL) {
+                    password = NULL,
+                    quiet = FALSE) {
   # browser()
   # checks
   if (is.null(dat)) {
@@ -396,7 +408,8 @@ write_sf = function(dat = NULL,
                    port = port,
                    dbname = dbname,
                    user = user,
-                   password = password)
+                   password = password,
+                   quiet = quiet)
   # bigint = 'integer') # to not return integer64 https://stackoverflow.com/questions/45171762/set-dbgetquery-to-return-integer64-as-integer
   on.exit(DBI::dbDisconnect(con))
   # query
