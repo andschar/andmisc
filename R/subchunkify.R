@@ -26,7 +26,7 @@ subchunkify = function(g,
     function() {g}
   ), collapse = '')
   
-  sub_chunk = paste0("```{r sub_chunk_", floor(runif(1) * 10000),
+  sub_chunk = paste0("```{r sub_chunk_", floor(runif(1) * 1e5),
                      ", fig.height=", fig.height,
                      ", fig.width=", fig.width,
                      ", echo=", echo,
