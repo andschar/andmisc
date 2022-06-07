@@ -5,6 +5,7 @@
 #' @param g A plot.
 #' @param fig.height The Figure height as in an RMarkdown document.
 #' @param fig.width The Figure width as in an RMarkdown document.
+#' @param dpi Dots per inch for figure.
 #' @param echo As in an RMarkdown document.
 #' @param message As in an RMarkdown document.
 #' @param warning As in an RMarkdown document.
@@ -19,6 +20,7 @@
 subchunkify = function(g,
                        fig.height = 7,
                        fig.width = 5,
+                       dpi = 72,
                        echo = FALSE,
                        message = FALSE,
                        warning = FALSE) {
@@ -29,6 +31,7 @@ subchunkify = function(g,
   sub_chunk = paste0("```{r sub_chunk_", floor(runif(1) * 1e5),
                      ", fig.height=", fig.height,
                      ", fig.width=", fig.width,
+                     ", dpi=", dpi,
                      ", echo=", echo,
                      ", warning=", warning,
                      ", message=", message,

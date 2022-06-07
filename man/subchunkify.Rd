@@ -8,6 +8,7 @@ subchunkify(
   g,
   fig.height = 7,
   fig.width = 5,
+  dpi = 72,
   echo = FALSE,
   message = FALSE,
   warning = FALSE
@@ -19,6 +20,8 @@ subchunkify(
 \item{fig.height}{The Figure height as in an RMarkdown document.}
 
 \item{fig.width}{The Figure width as in an RMarkdown document.}
+
+\item{dpi}{Dots per inch for figure.}
 
 \item{echo}{As in an RMarkdown document.}
 
