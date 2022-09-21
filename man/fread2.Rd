@@ -4,7 +4,7 @@
 \alias{fread2}
 \title{Convenience data.table::fread() wrapper.}
 \usage{
-fread2(...)
+fread2(..., na.strings = "")
 }
 \arguments{
 \item{...}{Any parameters for fread().}

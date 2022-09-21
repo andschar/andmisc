@@ -11,8 +11,8 @@
 #' write.csv(iris, fl)
 #' fread2(fl)
 #'
-fread2 = function(...) {
-  fread(...)
+fread2 = function(..., na.strings = '') {
+  fread(..., na.strings = na.strings)
 }
 
 #' Convenience data.table::fwrite() wrapper.
