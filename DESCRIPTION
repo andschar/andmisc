@@ -1,6 +1,6 @@
 Package: andmisc
-Version: 0.0.13
-Date: 2022-09-21
+Version: 0.0.14
+Date: 2022-10-21
 Title: Missceleaneous Functions Written by Andreas Scharmüller
 Authors@R: c(
     person("Andreas", "Scharmüller",
@@ -11,6 +11,7 @@ Authors@R: c(
 Maintainer: Andreas Scharmüller <andschar@protonmail.com>
 Description: Missceleanous functions written by Andreas Scharmüller.
 Imports:
+    stats,
     utils,
     checkmate,
     data.table,
