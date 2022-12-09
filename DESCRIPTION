@@ -28,5 +28,5 @@ Depends:
 License: MIT + file LICENSE
 URL: https://github.com/andschar/andmisc
 BugReports: https://github.com/andschar/andmisc/issues
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 Encoding: UTF-8

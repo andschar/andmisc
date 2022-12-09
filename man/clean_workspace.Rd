@@ -4,13 +4,18 @@
 \alias{clean_workspace}
 \title{Function to clean workspace appart from some variables}
 \usage{
-clean_workspace(keep = NULL, load_on_exit = NULL, envir = .GlobalEnv)
+clean_workspace(
+  keep = getOption("keep_in_workspace"),
+  load_on_exit = getOption("load_in_workspace"),
+  envir = .GlobalEnv
+)
 }
 \arguments{
-\item{keep}{Objects to not be removed from the workspace. Provide as 
-character vector}
+\item{keep}{Objects to not be removed from the workspace. Provide as
+character vector. By default getOption('keep_in_workspace') is called.}
 
-\item{load_on_exit}{character; Source a file on exit. Default: NULL - none.}
+\item{load_on_exit}{Source a file on exit. Provide a file path. By default
+getOption('load_in_workspace') is called.}
 
 \item{envir}{Envrionment to be cleaned. Deafault: .GlobalEnv}
 }
