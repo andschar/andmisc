@@ -51,5 +51,5 @@ read_spatial(query = "SELECT * FROM schema.table LIMIT 1;",
 
 }
 \author{
-Andreas Scharmueller, \email{andschar@protonmail.com}
+Andreas Scharmueller, \email{andschar@proton.me}
 }

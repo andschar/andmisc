@@ -2,7 +2,7 @@
 #'
 #' @param obj An R object.
 #' 
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #' 
 #' @export
 #'

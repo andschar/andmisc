@@ -5,7 +5,7 @@
 #'
 #' @param x a week number (as string or character).
 #' 
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #' 
 #' @export
 #' 

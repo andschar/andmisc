@@ -3,7 +3,7 @@
 #' @param con A connection object, or a character string naming a file, or a raw vector.
 #' Same as in \code{readChar()}.
 #' 
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #' 
 #' @export
 #' 

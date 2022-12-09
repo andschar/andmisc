@@ -3,7 +3,7 @@
 #' @param lhs Character vector.
 #' @param rhs Character vector that should be looked up in x.
 #'
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #'
 #' @export
 #' 
@@ -31,7 +31,7 @@
 #'
 #' @import data.table
 #'
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #'
 #' @export
 #'
@@ -58,7 +58,7 @@
 #'
 #' @import data.table
 #'
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #'
 #' @export
 #'
@@ -85,7 +85,7 @@
 #'
 #' @import data.table
 #'
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #'
 #' @export
 #'

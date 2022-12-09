@@ -1,6 +1,6 @@
 #' Connection function that handles argument or file inputs.
 #' 
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #' 
 #' @noRd
 #' 
@@ -79,7 +79,7 @@ connection = function(cred_file,
 #' in cred_file.
 #' @param quiet Quiet function call?
 #' 
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #' 
 #' @export
 #' 
@@ -143,7 +143,7 @@ read_query = function(query = NULL,
 #' in cred_file.
 #' @param quiet Quiet function call?
 #' 
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #' 
 #' @export
 #' 
@@ -211,7 +211,7 @@ send_query = function(query = NULL,
 #' in cred_file.
 #' @param quiet Quiet function call?
 #' 
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #' 
 #' @export
 #' 
@@ -296,7 +296,7 @@ write_tbl = function(dat = NULL,
 #' in cred_file.
 #' @param quiet Quiet function call?
 #' 
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #' 
 #' @export
 #' 
@@ -366,7 +366,7 @@ read_sf = function(query = NULL,
 #' in cred_file.
 #' @param quiet Quiet function call?
 #' 
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #' 
 #' @export
 #' 

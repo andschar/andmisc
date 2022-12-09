@@ -6,7 +6,7 @@
 #' getOption('load_in_workspace') is called.
 #' @param envir Envrionment to be cleaned. Deafault: .GlobalEnv
 #'
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #'
 #' @export
 #'

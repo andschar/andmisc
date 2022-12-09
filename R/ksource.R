@@ -5,7 +5,7 @@
 #' @param x Path to a .Rmd file.
 #' @param ... Arguments to pass on.
 #' 
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #' 
 #' @export
 #'

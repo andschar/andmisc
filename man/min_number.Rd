@@ -19,5 +19,5 @@ min_number(3, 10)
 
 }
 \author{
-Andreas Scharmueller, \email{andschar@protonmail.com}
+Andreas Scharmueller, \email{andschar@proton.me}
 }

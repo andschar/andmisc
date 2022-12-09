@@ -4,7 +4,7 @@
 #' @param dir A directory to write the report to.
 #' @param file file to log to.
 #' 
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #' 
 #' @export
 #' 

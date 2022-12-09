@@ -6,7 +6,7 @@
 #' @param drop0trailing as in \code{format()}.
 #' @param ... Other arguments passed on to \code{format()}.
 #' 
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #' 
 #' @export
 #' 

@@ -24,5 +24,5 @@ file.path2(tempdir(), 'test', 'blub')
 
 }
 \author{
-Andreas Scharmueller, \email{andschar@protonmail.com}
+Andreas Scharmueller, \email{andschar@proton.me}
 }

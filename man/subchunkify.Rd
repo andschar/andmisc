@@ -37,5 +37,5 @@ subchunkify(plot(iris, Sepal.Length ~ Sepal.Width))
 
 }
 \author{
-Andreas Scharmueller, \email{andschar@protonmail.com}
+Andreas Scharmueller, \email{andschar@proton.me}
 }

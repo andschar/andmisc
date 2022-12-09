@@ -6,7 +6,7 @@
 #' @param string String of vector of strings.
 #' @param n Number of characters to be trimmed
 #'
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #'
 #' @export
 #' 
@@ -25,7 +25,7 @@ left = function(string, n) {
 #' @param string String of vector of strings.
 #' @param n Number of characters to be trimmed
 #'
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #'
 #' @export
 #' 

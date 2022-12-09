@@ -2,7 +2,7 @@
 #' 
 #' @param v A numeric vector of \code{cit()} breaks.
 #' 
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #' 
 #' @export
 #' 

@@ -19,5 +19,5 @@ max_number(100, 10)
 
 }
 \author{
-Andreas Scharmueller, \email{andschar@protonmail.com}
+Andreas Scharmueller, \email{andschar@proton.me}
 }

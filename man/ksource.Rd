@@ -15,5 +15,5 @@ ksource(x, ...)
 A function to source .Rmd files.
 }
 \author{
-Andreas Scharmueller, \email{andschar@protonmail.com}
+Andreas Scharmueller, \email{andschar@proton.me}
 }

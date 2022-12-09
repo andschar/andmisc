@@ -3,7 +3,7 @@
 #' @param v A numeric vector.
 #' @param n A numeric vector indicating the position to separate.
 #' 
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #' 
 #' @export
 #' 

@@ -8,7 +8,7 @@
 #' 
 #' @description Taken from \url{https://stackoverflow.com/questions/52214071}.
 #' 
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #' 
 reorder_within = function(x,
                           by,
@@ -31,7 +31,7 @@ reorder_within = function(x,
 #' 
 #' @description Taken from \url{https://stackoverflow.com/questions/52214071}.
 #' 
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #' 
 scale_x_reordered = function(...,
                              sep = "___") {

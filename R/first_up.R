@@ -3,7 +3,7 @@
 #' @param x character; String for which the first letter should be set to upper
 #' case
 #' 
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #' 
 #' @export
 #'

@@ -15,5 +15,5 @@ scale_x_reordered(..., sep = "___")
 Taken from \url{https://stackoverflow.com/questions/52214071}.
 }
 \author{
-Andreas Scharmueller, \email{andschar@protonmail.com}
+Andreas Scharmueller, \email{andschar@proton.me}
 }

@@ -1,25 +1,25 @@
 Package: andmisc
 Version: 0.0.14
-Date: 2022-10-21
+Date: 2022-12-09
 Title: Missceleaneous Functions Written by Andreas Scharmüller
 Authors@R: c(
     person("Andreas", "Scharmüller",
             role = c("aut", "cre"),
-            email = "andschar@protonmail.com",
+            email = "andschar@proton.me",
             comment = c(ORCID = "0000-0002-9290-3965"))
     )
-Maintainer: Andreas Scharmüller <andschar@protonmail.com>
+Maintainer: Andreas Scharmüller <andschar@proton.me>
 Description: Missceleanous functions written by Andreas Scharmüller.
 Imports:
-    stats,
-    utils,
     checkmate,
     data.table,
     DBI,
-    ggplot2,
     extrafont,
+    ggplot2,
     knitr,
-    stringr
+    stats,
+    stringr,
+    utils
 Suggests:
     RPostgreSQL,
     sf

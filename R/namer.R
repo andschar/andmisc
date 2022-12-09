@@ -11,7 +11,7 @@
 #' @param ext Should a file extension be added at the end of the string?
 #' (e.g. .png)?
 #'
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #' 
 #' @export
 #' 
@@ -62,7 +62,7 @@ namer = function(dir = NULL,
 #' @param arg Which argument should be extracted?
 #' @param sep Separator used.
 #' 
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #' 
 #' @export
 #' 

@@ -2,7 +2,7 @@
 #'  
 #' @param ... Any parameters for fread().
 #' 
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #' 
 #' @export
 #'
@@ -21,7 +21,7 @@ fread2 = function(..., na.strings = '') {
 #' @param sep Separator as in fwrite().
 #' @param quote Quote as in fwrite().
 #' 
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #' 
 #' @export
 #'

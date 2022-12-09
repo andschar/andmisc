@@ -10,7 +10,7 @@
 #' @param message As in an RMarkdown document.
 #' @param warning As in an RMarkdown document.
 #' 
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #' 
 #' @export
 #' 

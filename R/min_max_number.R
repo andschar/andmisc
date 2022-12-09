@@ -3,7 +3,7 @@
 #' @param x A numeric vector or scalar.
 #' @param y A numeric threshold value that serves as a cutoff.
 #' 
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #' 
 #' @export
 #' 
@@ -19,7 +19,7 @@ min_number = function(x, y) {
 #' @param x A numeric vector or scalar.
 #' @param y A numeric threshold value that serves as a cutoff.
 #' 
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #' 
 #' @export
 #' 

@@ -22,5 +22,5 @@ fwrite2(iris, file.path(tempdir(), 'iris.tsv'),
 
 }
 \author{
-Andreas Scharmueller, \email{andschar@protonmail.com}
+Andreas Scharmueller, \email{andschar@proton.me}
 }

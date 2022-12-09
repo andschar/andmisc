@@ -8,7 +8,7 @@
 #' @param recursive As in \code{dir.create()}.
 #' @param mode As in \code{dir.create()}.
 #' 
-#' @author Andreas Scharmueller, \email{andschar@@protonmail.com}
+#' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #' 
 #' @export
 #' 
