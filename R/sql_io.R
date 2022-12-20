@@ -127,7 +127,7 @@ read_query = function(query = NULL,
 
 #' Function to send to a database.
 #'
-#' @param query A query string.
+#' @param query A query string or path to a file.
 #' @param cred_file An .R file containing the necessary credentials to connect
 #' to a Postgres database. Can contain variables: user, host, port, password,
 #' dbname.
@@ -165,6 +165,11 @@ send_query = function(query = NULL,
   # checks
   if (is.null(query)) {
     stop('No query supplied.')
+  }
+  # query string or path to file
+  q = try(suppressWarnings(andmisc::readChar2(fl)), silent = TRUE)
+  if (!inherits(q, 'try-error')) {
+    query = q
   }
   # connection
   con = connection(cred_file = cred_file,

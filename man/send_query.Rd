@@ -16,7 +16,7 @@ send_query(
 )
 }
 \arguments{
-\item{query}{A query string.}
+\item{query}{A query string or path to a file.}
 
 \item{cred_file}{An .R file containing the necessary credentials to connect
 to a Postgres database. Can contain variables: user, host, port, password,
