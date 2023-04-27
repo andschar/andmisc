@@ -1,23 +1,28 @@
 #' Connection function that handles argument or file inputs.
 #' 
+#' @param drv A database driver.
+#' @param dbname A database.
+#' @param cred_file An .R file containing the necessary credentials to connect
+#' to a different databases (e.g. PostgreSQL). Can contain variables: user,
+#' host, port, password, dbname.
+#' @param ... Arguments passed on to \code{DBI::dbConnect()}.
+#' @param quiet FALSE. Should progress messages be printed?
+#' 
 #' @author Andreas Scharmueller, \email{andschar@@proton.me}
 #' 
 #' @noRd
 #' 
-connection = function(cred_file,
-                      host,
-                      port,
+connection = function(drv,
                       dbname,
-                      user,
-                      password,
+                      cred_file = NULL,
+                      ...,
                       quiet = FALSE) {
-  # arg list
-  l = list(cred_file = cred_file,
-           host = host,
-           port = port,
-           dbname = dbname,
-           user = user,
-           password = password)
+  # include ellipsis
+  l = c(
+    list(drv = drv,
+         dbname = dbname),
+    list(...)
+  )
   # new environment cred_file
   ee = new.env()
   # credentials file
@@ -26,57 +31,31 @@ connection = function(cred_file,
       message('Sourcing cred_file: ', cred_file)
     }
     sys.source(cred_file, envir = ee)
-    # source(cred_file, local = TRUE) # OLD
+    # prefer ellipsis variables
+    l = list(
+      drv = l$drv,
+      host = c(l$host, ee$host)[1],
+      port = c(l$port, ee$port)[1],
+      dbname = c(l$dbname, ee$dbname)[1],
+      user = c(l$user, ee$user)[1],
+      password = c(l$password, ee$password)[1]
+    )
   }
-  # select only 1 variable, prefer match.call() variables
-  host = c(l$host, ee$host)[1]
-  port = c(l$port, ee$port)[1]
-  dbname = c(l$dbname, ee$dbname)[1]
-  user = c(l$user, ee$user)[1]
-  password = c(l$password, ee$password)[1]
-  # checking
-  if (is.null(host)) {
-    stop('Provide a host.')
+  if (!quiet) {
+    message('Database: ', dbname)
   }
-  if (is.null(port)) {
-    stop('Provide a port.')
-  }
-  if (is.null(dbname)) {
-    stop('Provide a dbname.')
-  }
-  if (is.null(password)) {
-    stop('Provide a password.')
-  }
-  if (is.null(user)) {
-    stop('Provide a user.')
-  }
-  # connection
-  DBI::dbConnect(
-    RPostgreSQL::PostgreSQL(),
-    host = host,
-    port = port,
-    dbname = dbname,
-    user = user,
-    password = password
-  )
+  # pass the list of arguments to connection function
+  do.call(DBI::dbConnect, l)
 }
 
 #' Function to read from a database.
 #'
 #' @param query A query string.
+#' @param drv A database driver.
 #' @param cred_file An .R file containing the necessary credentials to connect
-#' to a Postgres database. Can contain variables: user, host, port, password,
-#' dbname.
-#' @param host Optional host. Overwritten if \code{host} is defined in
-#' cred_file.
-#' @param port Optional port Overwritten if \code{port} is defined in
-#' cred_file.
-#' @param dbname Optional dbname Overwritten if \code{dbname} is defined
-#' in cred_file.
-#' @param user Optional user. Overwritten if \code{user} is defined in
-#' cred_file.
-#' @param password Optional password Overwritten if \code{password} is defined
-#' in cred_file.
+#' to a different databases (e.g. PostgreSQL). Can contain variables: user,
+#' host, port, password, dbname.
+#' @param ... Arguments passed on to \code{DBI::dbConnect()}. 
 #' @param quiet Quiet function call?
 #' 
 #' @author Andreas Scharmueller, \email{andschar@@proton.me}
@@ -91,31 +70,24 @@ connection = function(cred_file,
 #' }
 #' 
 read_query = function(query = NULL,
+                      drv,
+                      dbname,
                       cred_file = NULL,
-                      host = NULL,
-                      port = NULL,
-                      dbname = NULL,
-                      user = NULL,
-                      password = NULL,
+                      ...,
                       quiet = FALSE) {
   # checks
   if (is.null(query)) {
     stop('No query supplied.')
   }
   # connection
-  con = connection(cred_file = cred_file,
-                   host = host,
-                   port = port,
+  con = connection(drv = drv,
                    dbname = dbname,
-                   user = user,
-                   password = password,
+                   cred_file = cred_file,
+                   ...,
                    quiet = quiet)
   # bigint = 'integer') # to not return integer64 https://stackoverflow.com/questions/45171762/set-dbgetquery-to-return-integer64-as-integer
   on.exit(DBI::dbDisconnect(con))
   # query
-  if (!quiet) {
-    message('Database: ', DBI::dbGetQuery(con, "SELECT current_database();"))
-  }
   time = Sys.time()
   dat = DBI::dbGetQuery(con, query)
   if (!quiet) {
@@ -127,20 +99,12 @@ read_query = function(query = NULL,
 
 #' Function to send to a database.
 #'
-#' @param query A query string or path to a file.
+#' @param query A query string.
+#' @param drv A database driver.
 #' @param cred_file An .R file containing the necessary credentials to connect
-#' to a Postgres database. Can contain variables: user, host, port, password,
-#' dbname.
-#' @param user Optional user. Overwritten if \code{user} is defined in
-#' cred_file.
-#' @param host Optional host. Overwritten if \code{host} is defined in
-#' cred_file.
-#' @param port Optional port Overwritten if \code{port} is defined in
-#' cred_file.
-#' @param password Optional password Overwritten if \code{password} is defined
-#' in cred_file.
-#' @param dbname Optional dbname Overwritten if \code{dbname} is defined
-#' in cred_file.
+#' to a different databases (e.g. PostgreSQL). Can contain variables: user,
+#' host, port, password, dbname.
+#' @param ... Arguments passed on to \code{DBI::dbConnect()}. 
 #' @param quiet Quiet function call?
 #' 
 #' @author Andreas Scharmueller, \email{andschar@@proton.me}
@@ -155,36 +119,29 @@ read_query = function(query = NULL,
 #' }
 #'
 send_query = function(query = NULL,
+                      drv,
+                      dbname,
                       cred_file = NULL,
-                      user = NULL,
-                      host = NULL,
-                      port = NULL,
-                      password = NULL,
-                      dbname = NULL,
+                      ...,
                       quiet = FALSE) {
   # checks
   if (is.null(query)) {
     stop('No query supplied.')
   }
   # query string or path to file
-  q = try(suppressWarnings(andmisc::readChar2(fl)), silent = TRUE)
+  q = try(suppressWarnings(andmisc::readChar2(query)), silent = TRUE)
   if (!inherits(q, 'try-error')) {
     query = q
   }
   # connection
-  con = connection(cred_file = cred_file,
-                   host = host,
-                   port = port,
+  con = connection(drv = drv,
                    dbname = dbname,
-                   user = user,
-                   password = password,
+                   cred_file = cred_file,
+                   ...,
                    quiet = quiet)
   # bigint = 'integer') # to not return integer64 https://stackoverflow.com/questions/45171762/set-dbgetquery-to-return-integer64-as-integer
   on.exit(DBI::dbDisconnect(con))
   # query
-  if (!quiet) {
-    message('Database: ', DBI::dbGetQuery(con, "SELECT current_database();"))
-  }
   time = Sys.time()
   DBI::dbSendQuery(con, query)
   if (!quiet) {
@@ -197,23 +154,16 @@ send_query = function(query = NULL,
 #' @param dat data.frame, data.table or tibble.
 #' @param schema database schema.
 #' @param tbl database table.
-#' @param overwrite Should an existing database table be overwritten?
-#' TRUE (default).
 #' @param key Set a primary key in table?
 #' @param comment_str Add a comment to table? Recommended.
+#' @param overwrite Should an existing database table be overwritten?
+#' TRUE (default).
+#' @param drv A database driver.
+#' @param dbname The database name.
 #' @param cred_file An .R file containing the necessary credentials to connect
-#' to a Postgres database. Can contain variables: user, host, port, password,
-#' dbname.
-#' @param user Optional user. Overwritten if \code{user} is defined in
-#' cred_file.
-#' @param host Optional host. Overwritten if \code{host} is defined in
-#' cred_file.
-#' @param port Optional port Overwritten if \code{port} is defined in
-#' cred_file.
-#' @param password Optional password Overwritten if \code{password} is defined
-#' in cred_file.
-#' @param dbname Optional dbname Overwritten if \code{dbname} is defined
-#' in cred_file.
+#' to a different databases (e.g. PostgreSQL). Can contain variables: user,
+#' host, port, password, dbname.
+#' @param ... Arguments passed on to \code{DBI::dbConnect()}. 
 #' @param quiet Quiet function call?
 #' 
 #' @author Andreas Scharmueller, \email{andschar@@proton.me}
@@ -233,13 +183,12 @@ write_tbl = function(dat = NULL,
                      key = NULL,
                      comment_str = NULL,
                      overwrite = TRUE,
+                     drv,
+                     dbname,
                      cred_file = NULL,
-                     host = NULL,
-                     port = NULL,
-                     dbname = NULL,
-                     user = NULL,
-                     password = NULL,
+                     ...,
                      quiet = FALSE) {
+  # browser()
   if (is.null(dat)) {
     stop('No data.frame supplied.')
   }
@@ -247,17 +196,14 @@ write_tbl = function(dat = NULL,
     stop('No table supplied.')
   }
   # connection
-  con = connection(cred_file = cred_file,
-                   host = host,
-                   port = port,
+  con = connection(drv = drv,
                    dbname = dbname,
-                   user = user,
-                   password = password,
+                   cred_file = cred_file,
+                   ...,
                    quiet = quiet)
-  # bigint = 'integer') # to not return integer64 https://stackoverflow.com/questions/45171762/set-dbgetquery-to-return-integer64-as-integer
+                   # bigint = 'integer') # to not return integer64 https://stackoverflow.com/questions/45171762/set-dbgetquery-to-return-integer64-as-integer
   on.exit(DBI::dbDisconnect(con))
   # query
-  db = DBI::dbGetQuery(con, "SELECT current_database();")$current_database
   time = Sys.time()
   if (!is.null(schema)) {
     DBI::dbSendQuery(con, paste0("CREATE SCHEMA IF NOT EXISTS ", schema, ";"))
@@ -278,7 +224,7 @@ write_tbl = function(dat = NULL,
                                  "IS '", comment_str, "';"))
   }
   if (!quiet) {
-    message('Table created: ', paste0(c(db, schema, tbl), collapse = '.'))
+    message('Table created: ', paste0(c(dbname, schema, tbl), collapse = '.'))
     message('Query took: ', format(Sys.time() - time, digits = 1))
   }
 }
@@ -286,19 +232,11 @@ write_tbl = function(dat = NULL,
 #' Function to read spatial data from a database.
 #'
 #' @param query A query string.
+#' @param drv A database driver.
 #' @param cred_file An .R file containing the necessary credentials to connect
-#' to a Postgres database. Can contain variables: user, host, port, password,
-#' dbname.
-#' @param host Optional host. Overwritten if \code{host} is defined in
-#' cred_file.
-#' @param port Optional port Overwritten if \code{port} is defined in
-#' cred_file.
-#' @param dbname Optional dbname Overwritten if \code{dbname} is defined
-#' in cred_file.
-#' @param user Optional user. Overwritten if \code{user} is defined in
-#' cred_file.
-#' @param password Optional password Overwritten if \code{password} is defined
-#' in cred_file.
+#' to a different databases (e.g. PostgreSQL). Can contain variables: user,
+#' host, port, password, dbname.
+#' @param ... Arguments passed on to \code{DBI::dbConnect()}. 
 #' @param quiet Quiet function call?
 #' 
 #' @author Andreas Scharmueller, \email{andschar@@proton.me}
@@ -313,24 +251,20 @@ write_tbl = function(dat = NULL,
 #' }
 #' 
 read_sf = function(query = NULL,
+                   drv,
+                   dbname,
                    cred_file = NULL,
-                   host = NULL,
-                   port = NULL,
-                   dbname = NULL,
-                   user = NULL,
-                   password = NULL,
+                   ...,
                    quiet = FALSE) {
   # checks
   if (is.null(query)) {
     stop('No query supplied.')
   }
   # connection
-  con = connection(cred_file = cred_file,
-                   host = host,
-                   port = port,
+  con = connection(drv = drv,
                    dbname = dbname,
-                   user = user,
-                   password = password,
+                   cred_file = cred_file,
+                   ...,
                    quiet = quiet)
   # bigint = 'integer') # to not return integer64 https://stackoverflow.com/questions/45171762/set-dbgetquery-to-return-integer64-as-integer
   on.exit(DBI::dbDisconnect(con))
@@ -352,23 +286,16 @@ read_sf = function(query = NULL,
 #' @param dat a spatial data.frame (from the sf or sp package).
 #' @param schema database schema.
 #' @param tbl database table.
-#' @param overwrite Should an existing database table be overwritten?
-#' TRUE (default).
 #' @param key Set a primary key in table?
 #' @param comment_str Add a comment to table? Recommended.
+#' @param overwrite Should an existing database table be overwritten?
+#' TRUE (default).
+#' @param drv A database driver.
+#' @param dbname The database name.
 #' @param cred_file An .R file containing the necessary credentials to connect
-#' to a Postgres database. Can contain variables: user, host, port, password,
-#' dbname.
-#' @param user Optional user. Overwritten if \code{user} is defined in
-#' cred_file.
-#' @param host Optional host. Overwritten if \code{host} is defined in
-#' cred_file.
-#' @param port Optional port Overwritten if \code{port} is defined in
-#' cred_file.
-#' @param password Optional password Overwritten if \code{password} is defined
-#' in cred_file.
-#' @param dbname Optional dbname Overwritten if \code{dbname} is defined
-#' in cred_file.
+#' to a different databases (e.g. PostgreSQL). Can contain variables: user,
+#' host, port, password, dbname.
+#' @param ... Arguments passed on to \code{DBI::dbConnect()}. 
 #' @param quiet Quiet function call?
 #' 
 #' @author Andreas Scharmueller, \email{andschar@@proton.me}
@@ -381,7 +308,8 @@ read_sf = function(query = NULL,
 #' dat = sf::st_sf(id = 1,
 #'                 sf::st_sfc(sf::st_point(1:2))) # better to name it!
 #' 
-#' write_sf(dat, tbl = 'test',
+#' write_sf(dat, 
+#'          tbl = 'test',
 #'          cred_file = 'TODO_cred.R',
 #'          overwrite = TRUE)
 #' }
@@ -392,14 +320,11 @@ write_sf = function(dat = NULL,
                     key = NULL,
                     comment_str = NULL,
                     overwrite = TRUE,
+                    drv,
+                    dbname,
                     cred_file = NULL,
-                    host = NULL,
-                    port = NULL,
-                    dbname = NULL,
-                    user = NULL,
-                    password = NULL,
+                    ...,
                     quiet = FALSE) {
-  # browser()
   # checks
   if (is.null(dat)) {
     stop('No data.frame supplied.')
@@ -408,12 +333,10 @@ write_sf = function(dat = NULL,
     stop('No table supplied.')
   }
   # connection
-  con = connection(cred_file = cred_file,
-                   host = host,
-                   port = port,
+  con = connection(drv = drv,
                    dbname = dbname,
-                   user = user,
-                   password = password,
+                   cred_file = cred_file,
+                   ...,
                    quiet = quiet)
   # bigint = 'integer') # to not return integer64 https://stackoverflow.com/questions/45171762/set-dbgetquery-to-return-integer64-as-integer
   on.exit(DBI::dbDisconnect(con))

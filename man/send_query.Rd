@@ -4,38 +4,18 @@
 \alias{send_query}
 \title{Function to send to a database.}
 \usage{
-send_query(
-  query = NULL,
-  cred_file = NULL,
-  user = NULL,
-  host = NULL,
-  port = NULL,
-  password = NULL,
-  dbname = NULL,
-  quiet = FALSE
-)
+send_query(query = NULL, drv, dbname, cred_file = NULL, ..., quiet = FALSE)
 }
 \arguments{
-\item{query}{A query string or path to a file.}
+\item{query}{A query string.}
+
+\item{drv}{A database driver.}
 
 \item{cred_file}{An .R file containing the necessary credentials to connect
-to a Postgres database. Can contain variables: user, host, port, password,
-dbname.}
+to a different databases (e.g. PostgreSQL). Can contain variables: user,
+host, port, password, dbname.}
 
-\item{user}{Optional user. Overwritten if \code{user} is defined in
-cred_file.}
-
-\item{host}{Optional host. Overwritten if \code{host} is defined in
-cred_file.}
-
-\item{port}{Optional port Overwritten if \code{port} is defined in
-cred_file.}
-
-\item{password}{Optional password Overwritten if \code{password} is defined
-in cred_file.}
-
-\item{dbname}{Optional dbname Overwritten if \code{dbname} is defined
-in cred_file.}
+\item{...}{Arguments passed on to \code{DBI::dbConnect()}.}
 
 \item{quiet}{Quiet function call?}
 }

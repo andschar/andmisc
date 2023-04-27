@@ -11,12 +11,10 @@ write_tbl(
   key = NULL,
   comment_str = NULL,
   overwrite = TRUE,
+  drv,
+  dbname,
   cred_file = NULL,
-  host = NULL,
-  port = NULL,
-  dbname = NULL,
-  user = NULL,
-  password = NULL,
+  ...,
   quiet = FALSE
 )
 }
@@ -34,24 +32,15 @@ write_tbl(
 \item{overwrite}{Should an existing database table be overwritten?
 TRUE (default).}
 
+\item{drv}{A database driver.}
+
+\item{dbname}{The database name.}
+
 \item{cred_file}{An .R file containing the necessary credentials to connect
-to a Postgres database. Can contain variables: user, host, port, password,
-dbname.}
+to a different databases (e.g. PostgreSQL). Can contain variables: user,
+host, port, password, dbname.}
 
-\item{host}{Optional host. Overwritten if \code{host} is defined in
-cred_file.}
-
-\item{port}{Optional port Overwritten if \code{port} is defined in
-cred_file.}
-
-\item{dbname}{Optional dbname Overwritten if \code{dbname} is defined
-in cred_file.}
-
-\item{user}{Optional user. Overwritten if \code{user} is defined in
-cred_file.}
-
-\item{password}{Optional password Overwritten if \code{password} is defined
-in cred_file.}
+\item{...}{Arguments passed on to \code{DBI::dbConnect()}.}
 
 \item{quiet}{Quiet function call?}
 }
