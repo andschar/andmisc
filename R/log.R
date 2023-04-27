@@ -21,10 +21,16 @@ log_msg = function(msg = 'script run.',
   if (is.null(dir)) {
     dir = getwd()
   }
-  script = basename(sys.frame(1)$ofile)
-  out = paste(paste(Sys.time(), script, 'run: ', sep = ' '),
-              msg,
-              sep = '\t')
+  script = try(basename(sys.frame(1)$ofile), silent = TRUE)
+  if (inherits(script, 'try-error')) {
+    out = paste(paste(Sys.time(), 'Current script run: ', sep = ' '),
+                msg,
+                sep = '\t')
+  } else {
+    out = paste(paste(Sys.time(), script, 'run: ', sep = ' '),
+                msg,
+                sep = '\t')
+  }
   write(out, file.path(dir, file), append = TRUE)
   message(out)
 }
