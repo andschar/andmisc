@@ -4,12 +4,25 @@
 \alias{send_query}
 \title{Function to send to a database.}
 \usage{
-send_query(query = NULL, drv, dbname, cred_file = NULL, ..., quiet = FALSE)
+send_query(
+  query = NULL,
+  drv,
+  dbname,
+  immediate = TRUE,
+  cred_file = NULL,
+  ...,
+  quiet = FALSE
+)
 }
 \arguments{
 \item{query}{A query string.}
 
 \item{drv}{A database driver.}
+
+\item{dbname}{Name of database.}
+
+\item{immediate}{TRUE Needed to send multiple statements in \code{RPostgres::dbSendQuery()}.
+Doesn't effect \code{RPostgreSQL::dbSendQuery()}.}
 
 \item{cred_file}{An .R file containing the necessary credentials to connect
 to a different databases (e.g. PostgreSQL). Can contain variables: user,

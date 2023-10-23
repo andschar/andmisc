@@ -101,6 +101,9 @@ read_query = function(query = NULL,
 #'
 #' @param query A query string.
 #' @param drv A database driver.
+#' @param dbname Name of database.
+#' @param immediate TRUE Needed to send multiple statements in \code{RPostgres::dbSendQuery()}.
+#' Doesn't effect \code{RPostgreSQL::dbSendQuery()}.
 #' @param cred_file An .R file containing the necessary credentials to connect
 #' to a different databases (e.g. PostgreSQL). Can contain variables: user,
 #' host, port, password, dbname.
@@ -121,6 +124,7 @@ read_query = function(query = NULL,
 send_query = function(query = NULL,
                       drv,
                       dbname,
+                      immediate = TRUE,
                       cred_file = NULL,
                       ...,
                       quiet = FALSE) {
@@ -143,7 +147,12 @@ send_query = function(query = NULL,
   on.exit(DBI::dbDisconnect(con))
   # query
   time = Sys.time()
-  DBI::dbSendQuery(con, query)
+  rs = DBI::dbSendQuery(
+    con,
+    query,
+    immediate = immediate,
+  )
+  DBI::dbClearResult(rs)
   if (!quiet) {
     message('Query took: ', format(Sys.time() - time, digits = 1))
   }
@@ -199,25 +208,43 @@ write_tbl = function(dat = NULL,
   con = connection(drv = drv,
                    dbname = dbname,
                    cred_file = cred_file,
-                   ...,
                    quiet = quiet)
-                   # bigint = 'integer') # to not return integer64 https://stackoverflow.com/questions/45171762/set-dbgetquery-to-return-integer64-as-integer
+  # bigint = 'integer') # to not return integer64 https://stackoverflow.com/questions/45171762/set-dbgetquery-to-return-integer64-as-integer
   on.exit(DBI::dbDisconnect(con))
   # query
+  ## schema
   time = Sys.time()
   if (!is.null(schema)) {
     DBI::dbSendQuery(con, paste0("CREATE SCHEMA IF NOT EXISTS ", schema, ";"))
   }
-  DBI::dbWriteTable(con,
-                    name = c(schema, tbl),
-                    value = dat,
-                    overwrite = overwrite,
-                    row.names = FALSE)
+  ## write
+  if (inherits(con, 'PqConnection')) {
+    suppressWarnings( # NOTE Hotfix when using RPostgres:: to not print Warning message: Closing open result set, cancelling previous query 
+      DBI::dbWriteTable(
+        con,
+        name = DBI::Id(schema = schema, table = tbl),
+        value = dat,
+        overwrite = overwrite,
+        row.names = FALSE
+      )
+    )
+  }
+  if (inherits(con, 'PostgreSQLConnection')) {
+    DBI::dbWriteTable(
+      con,
+      name = c(schema, tbl),
+      value = dat,
+      overwrite = overwrite,
+      row.names = FALSE
+    )
+  }
+  ## key
   if (!is.null(key)) {
     DBI::dbSendQuery(con, paste0("ALTER TABLE ",
                                  paste0(c(schema, tbl), collapse = "."), " ",
                                  "ADD PRIMARY KEY (", key, ");"))
   }
+  ## comment
   if (!is.null(comment_str)) {
     DBI::dbSendQuery(con, paste0("COMMENT ON TABLE ",
                                  paste0(c(schema, tbl), collapse = "."), " ",
@@ -264,7 +291,6 @@ read_sf = function(query = NULL,
   con = connection(drv = drv,
                    dbname = dbname,
                    cred_file = cred_file,
-                   ...,
                    quiet = quiet)
   # bigint = 'integer') # to not return integer64 https://stackoverflow.com/questions/45171762/set-dbgetquery-to-return-integer64-as-integer
   on.exit(DBI::dbDisconnect(con))
@@ -336,7 +362,6 @@ write_sf = function(dat = NULL,
   con = connection(drv = drv,
                    dbname = dbname,
                    cred_file = cred_file,
-                   ...,
                    quiet = quiet)
   # bigint = 'integer') # to not return integer64 https://stackoverflow.com/questions/45171762/set-dbgetquery-to-return-integer64-as-integer
   on.exit(DBI::dbDisconnect(con))
