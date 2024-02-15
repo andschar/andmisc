@@ -240,9 +240,14 @@ write_tbl = function(dat = NULL,
   }
   ## key
   if (!is.null(key)) {
-    DBI::dbSendQuery(con, paste0("ALTER TABLE ",
-                                 paste0(c(schema, tbl), collapse = "."), " ",
-                                 "ADD PRIMARY KEY (", key, ");"))
+    DBI::dbSendQuery(
+      con,
+      paste0(
+        "ALTER TABLE ",
+        paste0(c(schema, tbl), collapse = "."), " ",
+        "ADD PRIMARY KEY (", paste0(key, collapse = ', '), ");"
+      )
+    )
   }
   ## comment
   if (!is.null(comment_str)) {
@@ -377,14 +382,22 @@ write_sf = function(dat = NULL,
                delete_layer = overwrite,
                row.names = FALSE)
   if (!is.null(key)) {
-    DBI::dbSendQuery(con, paste0("ALTER TABLE ",
-                                 paste0(c(schema, tbl), collapse = "."), " ",
-                                 "ADD PRIMARY KEY (", key, ");"))
+    rs = DBI::dbSendQuery(
+      con,
+      paste0("ALTER TABLE ",
+             paste0(c(schema, tbl), collapse = "."), " ",
+             "ADD PRIMARY KEY (", key, ");")
+    )
+    DBI::dbClearResult(rs)
   }
   if (!is.null(comment_str)) {
-    DBI::dbSendQuery(con, paste0("COMMENT ON TABLE ",
-                                 paste0(c(schema, tbl), collapse = "."), " ",
-                                 "IS '", comment_str, "';"))
+    rs = DBI::dbSendQuery(
+      con,
+      paste0("COMMENT ON TABLE ",
+             paste0(c(schema, tbl), collapse = "."), " ",
+             "IS '", comment_str, "';")
+    )
+    DBI::dbClearResult(rs)
   }
   if (!quiet) {
     message('Table created: ', paste0(c(db, schema, tbl), collapse = '.'))
