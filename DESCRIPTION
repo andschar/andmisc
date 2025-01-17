@@ -1,6 +1,6 @@
 Package: andmisc
-Version: 0.0.17
-Date: 2023-10-23
+Version: 0.0.18
+Date: 2025-01-17
 Title: Missceleaneous Functions Written by Andreas Scharmüller
 Authors@R: c(
     person("Andreas", "Scharmüller",
@@ -28,5 +28,5 @@ Depends:
 License: MIT + file LICENSE
 URL: https://github.com/andschar/andmisc
 BugReports: https://github.com/andschar/andmisc/issues
-RoxygenNote: 7.2.1
+RoxygenNote: 7.3.2
 Encoding: UTF-8

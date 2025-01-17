@@ -208,6 +208,7 @@ write_tbl = function(dat = NULL,
   con = connection(drv = drv,
                    dbname = dbname,
                    cred_file = cred_file,
+                   ...,
                    quiet = quiet)
   # bigint = 'integer') # to not return integer64 https://stackoverflow.com/questions/45171762/set-dbgetquery-to-return-integer64-as-integer
   on.exit(DBI::dbDisconnect(con))
@@ -296,6 +297,7 @@ read_sf = function(query = NULL,
   con = connection(drv = drv,
                    dbname = dbname,
                    cred_file = cred_file,
+                   ...,
                    quiet = quiet)
   # bigint = 'integer') # to not return integer64 https://stackoverflow.com/questions/45171762/set-dbgetquery-to-return-integer64-as-integer
   on.exit(DBI::dbDisconnect(con))
@@ -367,6 +369,7 @@ write_sf = function(dat = NULL,
   con = connection(drv = drv,
                    dbname = dbname,
                    cred_file = cred_file,
+                   ...,
                    quiet = quiet)
   # bigint = 'integer') # to not return integer64 https://stackoverflow.com/questions/45171762/set-dbgetquery-to-return-integer64-as-integer
   on.exit(DBI::dbDisconnect(con))
